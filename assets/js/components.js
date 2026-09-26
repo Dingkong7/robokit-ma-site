@@ -79,7 +79,7 @@ function renderFooter(){
           <ul>
             <li><a href="contact.html">Contact</a></li>
             <li><a href="commander.html">Commander</a></li>
-            <li><a href="admin.html">Administration</a></li>
+            
           </ul>
         </div>
         <div>

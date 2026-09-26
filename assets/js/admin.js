@@ -54,7 +54,7 @@ async function renderAdminTable(){
 
   tbody.innerHTML = list.map(p => `
     <tr>
-      <td><div class="table-thumb">${categoryIcon(p.category,"")}</div></td>
+      <td><div class="table-thumb">${p.image_url ? `<img src="${p.image_url}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">` : categoryIcon(p.category,"")}</div></td>
       <td>${p.title}</td>
       <td><span class="tag-cat">${categoryLabel(p.category)}</span></td>
       <td>${formatPrice(p.price)}</td>
@@ -81,6 +81,7 @@ async function openProductModal(id){
     document.getElementById("pTitle").value = p.title;
     document.getElementById("pCategory").value = p.category;
     document.getElementById("pDescription").value = p.description;
+    document.getElementById("pImageUrl").value = p.image_url || "";
     document.getElementById("pPrice").value = p.price;
     document.getElementById("pStock").value = p.stock;
   } else {
@@ -128,6 +129,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       title: document.getElementById("pTitle").value.trim(),
       category: document.getElementById("pCategory").value,
       description: document.getElementById("pDescription").value.trim(),
+      image_url: document.getElementById("pImageUrl").value.trim() || null,
       price: parseFloat(document.getElementById("pPrice").value) || 0,
       stock: parseInt(document.getElementById("pStock").value) || 0,
     };

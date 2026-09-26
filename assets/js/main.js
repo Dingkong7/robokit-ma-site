@@ -4,11 +4,14 @@
 
 function productCardHtml(p){
   const lowStock = p.stock <= 5;
+  const media = p.image_url
+    ? `<img src="${p.image_url}" alt="${p.title}" loading="lazy">`
+    : categoryIcon(p.category, "");
   return `
     <div class="card">
       <div class="card-media">
         <span class="card-cat">${categoryLabel(p.category)}</span>
-        ${categoryIcon(p.category, "")}
+        ${media}
       </div>
       <div class="card-body">
         <h3>${p.title}</h3>

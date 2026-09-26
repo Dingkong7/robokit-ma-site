@@ -17,7 +17,7 @@
   <div class="wrap page-head">
     <div class="breadcrumb"><a href="index.html">Accueil</a> / Administration</div>
     <h1>Espace administration</h1>
-    <p style="color:var(--silk-dim);max-width:70ch;">Ajoutez, modifiez ou supprimez des produits du catalogue. Ces changements sont enregistrés dans ce navigateur.</p>
+    
   </div>
 
   <!-- Écran de connexion -->
@@ -85,6 +85,11 @@
         <div class="field">
           <label for="pDescription">Description courte</label>
           <textarea id="pDescription" rows="3"></textarea>
+        </div>
+        <div class="field">
+          <label for="pImageUrl">Image du produit (URL ou chemin)</label>
+          <input type="text" id="pImageUrl" placeholder="assets/images/products/exemple.jpg">
+          <span class="hint">Collez un lien direct, ou un chemin relatif si le fichier est dans assets/images/products/.</span>
         </div>
         <div class="field">
           <label for="pPrice">Prix (MAD) *</label>

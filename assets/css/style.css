@@ -73,7 +73,7 @@ body{
    content, and costs nothing functionally. */
 body::before{
   content:"";
-  position:fixed; inset:0; z-index:0; pointer-events:none;
+  position:absolute; inset:0; z-index:0; pointer-events:none;
   background:
     radial-gradient(680px 420px at 88% -8%, rgba(62,230,208,.10), transparent 60%),
     radial-gradient(620px 380px at 6% 8%, rgba(201,125,61,.09), transparent 62%),
@@ -81,7 +81,7 @@ body::before{
 }
 body::after{
   content:"";
-  position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+  position:absolute; inset:0; z-index:0; pointer-events:none; opacity:.5;
   background-image:
     linear-gradient(var(--pcb-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--pcb-line) 1px, transparent 1px);
@@ -354,6 +354,8 @@ section{ padding:60px 0; }
 }
 .card-media svg{ width:56%; height:56%; transition:transform .25s var(--ease); }
 .card:hover .card-media svg{ transform:scale(1.06) rotate(-1deg); color:var(--cyan-bright); }
+.card-media img{ width:100%; height:100%; object-fit:cover; transition:transform .3s var(--ease); }
+.card:hover .card-media img{ transform:scale(1.04); }
 .card-cat{
   position:absolute; top:10px; left:10px;
   font-family:var(--font-mono); font-size:.65rem; color:var(--cyan-bright);
@@ -516,7 +518,8 @@ tbody tr:hover{ background:rgba(62,230,208,.04); }
 .social-row{ display:flex; gap:10px; margin-top:24px; flex-wrap:wrap; }
 
 /* ---------- Footer ---------- */
-.site-footer{ border-top:1px solid var(--pcb-line); background:var(--pcb-900); padding:52px 0 28px; margin-top:40px; }
+.site-footer{ border-top:1px solid var(--pcb-line); background:var(--pcb-900); padding:0 0 28px; margin-top:40px; }
+.site-footer .wrap{ padding-top:52px; }
 .footer-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1.2fr; gap:32px; margin-bottom:36px; }
 .footer-grid h4{ font-size:.86rem; color:var(--silk); margin-bottom:14px; }
 .footer-grid p{ color:var(--silk-dim); font-size:.86rem; }
