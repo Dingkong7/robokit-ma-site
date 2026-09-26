@@ -49,18 +49,19 @@
 
   <section class="wrap">
     <div class="section-head">
-<div style="
+<!-- Responsive 728x90 Ad -->
+<div id="responsive-ad" style="
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin: 20px 0;
   overflow: hidden;
+  margin: 20px 0 30px;
 ">
-  <div style="
+  <div id="ad-scale-box" style="
     width: 728px;
-    max-width: 100%;
-    text-align: center;
+    height: 90px;
+    flex-shrink: 0;
+    transform-origin: top center;
   ">
     <script>
       atOptions = {
@@ -71,9 +72,34 @@
         'params' : {}
       };
     </script>
+
     <script src="https://impoliteprobability.com/9ff0950379f34d6df6e4eb4b9b71e93b/invoke.js"></script>
   </div>
-</div>      
+</div>
+
+<script>
+(function () {
+  const adBox = document.getElementById('ad-scale-box');
+  const container = document.getElementById('responsive-ad');
+
+  function resizeAd() {
+    const availableWidth = container.clientWidth;
+
+    if (availableWidth < 728) {
+      const scale = availableWidth / 728;
+
+      adBox.style.transform = `scale(${scale})`;
+      container.style.height = `${90 * scale}px`;
+    } else {
+      adBox.style.transform = 'scale(1)';
+      container.style.height = '90px';
+    }
+  }
+
+  resizeAd();
+  window.addEventListener('resize', resizeAd);
+})();
+</script>      
       <div>
         <span class="tag">CATÉGORIES</span>
         <h2>Parcourir par catégorie</h2>
@@ -86,18 +112,19 @@
 
   <section class="wrap">
     <div class="section-head">
-      <div style="
+      <!-- Responsive 728x90 Ad -->
+<div id="responsive-ad" style="
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin: 20px 0;
   overflow: hidden;
+  margin: 20px 0 30px;
 ">
-  <div style="
+  <div id="ad-scale-box" style="
     width: 728px;
-    max-width: 100%;
-    text-align: center;
+    height: 90px;
+    flex-shrink: 0;
+    transform-origin: top center;
   ">
     <script>
       atOptions = {
@@ -108,9 +135,34 @@
         'params' : {}
       };
     </script>
+
     <script src="https://impoliteprobability.com/9ff0950379f34d6df6e4eb4b9b71e93b/invoke.js"></script>
   </div>
 </div>
+
+<script>
+(function () {
+  const adBox = document.getElementById('ad-scale-box');
+  const container = document.getElementById('responsive-ad');
+
+  function resizeAd() {
+    const availableWidth = container.clientWidth;
+
+    if (availableWidth < 728) {
+      const scale = availableWidth / 728;
+
+      adBox.style.transform = `scale(${scale})`;
+      container.style.height = `${90 * scale}px`;
+    } else {
+      adBox.style.transform = 'scale(1)';
+      container.style.height = '90px';
+    }
+  }
+
+  resizeAd();
+  window.addEventListener('resize', resizeAd);
+})();
+</script>
       <div>
         <span class="tag">SÉLECTION</span>
         <h2>Produits en vedette</h2>
@@ -122,18 +174,19 @@
   </section>
 
 </main>
-<div style="
+<!-- Responsive 728x90 Ad -->
+<div id="responsive-ad" style="
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin: 20px 0;
   overflow: hidden;
+  margin: 20px 0 30px;
 ">
-  <div style="
+  <div id="ad-scale-box" style="
     width: 728px;
-    max-width: 100%;
-    text-align: center;
+    height: 90px;
+    flex-shrink: 0;
+    transform-origin: top center;
   ">
     <script>
       atOptions = {
@@ -144,9 +197,34 @@
         'params' : {}
       };
     </script>
+
     <script src="https://impoliteprobability.com/9ff0950379f34d6df6e4eb4b9b71e93b/invoke.js"></script>
   </div>
 </div>
+
+<script>
+(function () {
+  const adBox = document.getElementById('ad-scale-box');
+  const container = document.getElementById('responsive-ad');
+
+  function resizeAd() {
+    const availableWidth = container.clientWidth;
+
+    if (availableWidth < 728) {
+      const scale = availableWidth / 728;
+
+      adBox.style.transform = `scale(${scale})`;
+      container.style.height = `${90 * scale}px`;
+    } else {
+      adBox.style.transform = 'scale(1)';
+      container.style.height = '90px';
+    }
+  }
+
+  resizeAd();
+  window.addEventListener('resize', resizeAd);
+})();
+</script>
 <footer class="site-footer" id="site-footer"></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
