@@ -28,11 +28,29 @@ function renderHeader(activePage){
         <button class="nav-toggle" id="navToggle" aria-label="Menu">${MENU_SVG}</button>
       </div>
     </div>
+    <div class="nav-scrim" id="navScrim"></div>
     <div class="trace"></div>
   `;
   const toggle = document.getElementById("navToggle");
   const nav = document.getElementById("mainNav");
-  toggle.addEventListener("click", () => nav.classList.toggle("open"));
+  const scrim = document.getElementById("navScrim");
+
+  function openNav(){
+    nav.classList.add("open");
+    scrim.classList.add("show");
+    document.body.style.overflow = "hidden";
+  }
+  function closeNav(){
+    nav.classList.remove("open");
+    scrim.classList.remove("show");
+    document.body.style.overflow = "";
+  }
+  toggle.addEventListener("click", () => {
+    nav.classList.contains("open") ? closeNav() : openNav();
+  });
+  scrim.addEventListener("click", closeNav);
+  nav.querySelectorAll("a").forEach(a => a.addEventListener("click", closeNav));
+  window.addEventListener("resize", () => { if(window.innerWidth > 720) closeNav(); });
   updateCartBadge();
 }
 
