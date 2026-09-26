@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoboKit.ma — Robotique &amp; Électronique au Maroc</title>
+<meta name="description" content="Boutique en ligne marocaine de composants électroniques et robotiques : Arduino, Raspberry Pi, capteurs, moteurs, outils et accessoires.">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="accueil">
+
+<header class="site-header" id="site-header"></header>
+
+<main>
+
+  <section class="hero" style="padding:0;">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow-tag">Livraison partout au Maroc</span>
+        <h1>Tout pour construire vos projets <span>électroniques &amp; robotiques</span></h1>
+        <p class="lead">Arduino, Raspberry Pi, capteurs, moteurs, outils de soudure... RoboKit.ma réunit les composants dont makers, étudiants et ingénieurs ont besoin, à des prix justes.</p>
+        <div class="hero-actions">
+          <a href="produits.html" class="btn btn-copper">Voir les produits</a>
+          <a href="categories.html" class="btn btn-outline">Parcourir les catégories</a>
+        </div>
+      </div>
+      <div class="hero-panel">
+        <div class="pin-row">
+          <span class="pin"></span><span class="pin"></span><span class="pin"></span><span class="pin"></span><span class="pin"></span><span class="pin"></span>
+        </div>
+        <h3 style="font-size:1rem;color:var(--silk-dim);font-family:var(--font-mono);">RÉFÉRENCE DU CATALOGUE</h3>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="num" id="statProducts">—</div><div class="lbl">Produits en catalogue</div></div>
+          <div class="hero-stat"><div class="num">6</div><div class="lbl">Catégories</div></div>
+          <div class="hero-stat"><div class="num">24h</div><div class="lbl">Traitement commande</div></div>
+          <div class="hero-stat"><div class="num">100%</div><div class="lbl">Commande via WhatsApp</div></div>
+        </div>
+        <div class="pin-row" style="margin-top:18px;margin-bottom:0;">
+          <span class="pin"></span><span class="pin"></span><span class="pin"></span><span class="pin"></span><span class="pin"></span><span class="pin"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="promo">
+      <div>
+        <h3>Kit de démarrage Arduino en promotion</h3>
+        <p>Carte, câbles, capteurs et guide — tout pour lancer votre premier projet.</p>
+      </div>
+      <a href="produits.html?cat=developpement" class="btn btn-copper">Découvrir l'offre</a>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="tag">CATÉGORIES</span>
+        <h2>Parcourir par catégorie</h2>
+        <p>Trouvez rapidement les composants qu'il vous faut, classés par usage.</p>
+      </div>
+      <a href="categories.html" class="link-more">Toutes les catégories →</a>
+    </div>
+    <div class="cat-grid" id="homeCategoryGrid"></div>
+  </section>
+
+  <section class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="tag">SÉLECTION</span>
+        <h2>Produits en vedette</h2>
+        <p>Les références les plus demandées par notre communauté de makers.</p>
+      </div>
+      <a href="produits.html" class="link-more">Voir tout le catalogue →</a>
+    </div>
+    <div class="product-grid" id="homeFeaturedGrid"></div>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="assets/js/supabase-config.js"></script>
+<script src="assets/js/icons.js"></script>
+<script src="assets/js/data/products-index.js"></script>
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/components.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    renderCategoryGrid("homeCategoryGrid");
+    if(warnIfNotConfigured("#homeFeaturedGrid")) return;
+    const all = await getAllProducts();
+    document.getElementById("statProducts").textContent = all.length;
+    // sélection "vedette" : les 8 premiers produits en stock le plus élevé
+    const featured = [...all].sort((a,b) => b.stock - a.stock).slice(0, 8);
+    renderProductGrid("homeFeaturedGrid", featured);
+  });
+</script>
+</body>
+</html>

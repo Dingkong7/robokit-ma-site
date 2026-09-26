@@ -1,0 +1,383 @@
+/* ==========================================================================
+   RoboKit Maroc — feuille de style principale
+   Thème inspiré des circuits imprimés : vert PCB profond, pistes cuivrées,
+   sérigraphie blanche. Typo technique (labels/prix) + sans-serif (lecture).
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
+
+:root{
+  /* Palette PCB */
+  --pcb-950:#081a14;
+  --pcb-900:#0c241b;
+  --pcb-800:#123423;
+  --pcb-700:#194a30;
+  --pcb-line: rgba(201,125,61,.28);
+
+  --copper:#c97d3d;
+  --copper-bright:#e8a65c;
+  --copper-dim:#8a5a2e;
+
+  --silk:#eeeae0;
+  --silk-dim:#b9c2ba;
+  --silver:#93a39a;
+
+  --ok:#7fbf8f;
+  --danger:#d16860;
+
+  --radius-s:4px;
+  --radius-m:8px;
+  --shadow-copper: 0 0 0 1px var(--pcb-line);
+
+  --font-display:'Space Grotesk', 'Inter', sans-serif;
+  --font-body:'Inter', system-ui, sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+
+  --maxw:1240px;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0;
+  background:var(--pcb-950);
+  color:var(--silk);
+  font-family:var(--font-body);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+
+img{ max-width:100%; display:block; }
+a{ color:inherit; text-decoration:none; }
+button{ font-family:inherit; cursor:pointer; }
+ul{ list-style:none; margin:0; padding:0; }
+h1,h2,h3,h4{ font-family:var(--font-display); margin:0 0 .5em; line-height:1.15; font-weight:600; }
+
+.wrap{ max-width:var(--maxw); margin:0 auto; padding:0 24px; }
+
+:focus-visible{ outline:2px solid var(--copper-bright); outline-offset:2px; }
+
+/* trace divider — motif de piste de circuit imprimé */
+.trace{
+  height:2px; width:100%;
+  background-image:linear-gradient(90deg, var(--pcb-line) 60%, transparent 0);
+  background-size: 14px 2px;
+  margin:0;
+}
+
+/* ---------- Header ---------- */
+.site-header{
+  position:sticky; top:0; z-index:50;
+  background:rgba(8,26,20,.92);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--pcb-line);
+}
+.header-inner{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 24px; gap:20px;
+}
+.brand{ display:flex; align-items:center; gap:10px; font-family:var(--font-display); font-weight:700; font-size:1.25rem; color:var(--silk); }
+.brand .chip{
+  width:30px; height:30px; border-radius:6px;
+  background:var(--pcb-800); border:1px solid var(--copper-dim);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--copper-bright); font-family:var(--font-mono); font-size:.75rem;
+}
+.brand small{ display:block; font-family:var(--font-body); font-weight:400; font-size:.65rem; color:var(--silver); letter-spacing:.02em; }
+
+.main-nav{ display:flex; gap:28px; }
+.main-nav a{
+  font-size:.94rem; color:var(--silk-dim);
+  padding:6px 2px; border-bottom:2px solid transparent;
+  transition:color .15s ease, border-color .15s ease;
+}
+.main-nav a:hover, .main-nav a.active{ color:var(--silk); border-color:var(--copper); }
+
+.header-actions{ display:flex; align-items:center; gap:14px; }
+.icon-btn{
+  position:relative; display:flex; align-items:center; justify-content:center;
+  width:40px; height:40px; border-radius:var(--radius-m);
+  background:var(--pcb-800); border:1px solid var(--pcb-line); color:var(--silk);
+  transition:border-color .15s ease;
+}
+.icon-btn:hover{ border-color:var(--copper); }
+.cart-count{
+  position:absolute; top:-6px; right:-6px;
+  background:var(--copper); color:var(--pcb-950);
+  font-family:var(--font-mono); font-size:.68rem; font-weight:600;
+  min-width:18px; height:18px; border-radius:9px;
+  display:flex; align-items:center; justify-content:center; padding:0 4px;
+}
+.nav-toggle{ display:none; background:none; border:none; color:var(--silk); }
+
+/* ---------- Buttons ---------- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:12px 22px; border-radius:var(--radius-s);
+  font-weight:600; font-size:.92rem; border:1px solid transparent;
+  transition:transform .12s ease, background .15s ease, border-color .15s ease;
+}
+.btn:active{ transform:translateY(1px); }
+.btn-copper{ background:var(--copper); color:var(--pcb-950); }
+.btn-copper:hover{ background:var(--copper-bright); }
+.btn-outline{ border-color:var(--copper-dim); color:var(--silk); background:transparent; }
+.btn-outline:hover{ border-color:var(--copper); color:var(--copper-bright); }
+.btn-ghost{ background:var(--pcb-800); color:var(--silk-dim); }
+.btn-ghost:hover{ color:var(--silk); }
+.btn-block{ width:100%; }
+.btn-sm{ padding:8px 14px; font-size:.82rem; }
+.btn:disabled{ opacity:.45; cursor:not-allowed; }
+
+/* ---------- Hero ---------- */
+.hero{
+  position:relative; overflow:hidden;
+  border-bottom:1px solid var(--pcb-line);
+  background:
+    radial-gradient(700px 320px at 85% -10%, rgba(201,125,61,.14), transparent 60%),
+    var(--pcb-950);
+}
+.hero-grid{
+  display:grid; grid-template-columns:1.1fr .9fr; gap:40px; align-items:center;
+  padding:76px 0 64px;
+}
+.eyebrow-tag{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--font-mono); font-size:.75rem; color:var(--copper-bright);
+  border:1px solid var(--copper-dim); border-radius:20px; padding:5px 12px;
+  margin-bottom:20px;
+}
+.eyebrow-tag::before{ content:'●'; font-size:.6rem; color:var(--ok); }
+.hero h1{
+  font-size:clamp(2.1rem, 3.6vw, 3.3rem);
+  max-width:14ch;
+  color:var(--silk);
+}
+.hero h1 span{ color:var(--copper-bright); }
+.hero p.lead{ color:var(--silk-dim); max-width:46ch; font-size:1.05rem; margin-bottom:28px; }
+.hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+
+.hero-panel{
+  position:relative; border:1px solid var(--pcb-line); border-radius:var(--radius-m);
+  background:var(--pcb-900); padding:26px;
+}
+.hero-panel .pin-row{ display:flex; justify-content:space-between; margin-bottom:18px; }
+.hero-panel .pin{ width:7px; height:7px; border-radius:50%; background:var(--copper-dim); }
+.hero-stats{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:18px; }
+.hero-stat{ border:1px solid var(--pcb-line); border-radius:var(--radius-s); padding:14px; }
+.hero-stat .num{ font-family:var(--font-mono); font-size:1.5rem; color:var(--copper-bright); }
+.hero-stat .lbl{ font-size:.78rem; color:var(--silver); margin-top:4px; }
+
+/* ---------- Section shell ---------- */
+section{ padding:64px 0; }
+.section-head{
+  display:flex; align-items:flex-end; justify-content:space-between; gap:20px;
+  margin-bottom:32px; flex-wrap:wrap;
+}
+.section-head .tag{ font-family:var(--font-mono); font-size:.72rem; color:var(--copper); letter-spacing:.06em; display:block; margin-bottom:8px; }
+.section-head h2{ font-size:1.7rem; margin:0; }
+.section-head p{ color:var(--silk-dim); margin:6px 0 0; max-width:52ch; }
+.link-more{ color:var(--copper-bright); font-size:.92rem; white-space:nowrap; }
+
+/* ---------- Category blocks ---------- */
+.cat-grid{ display:grid; grid-template-columns:repeat(6,1fr); gap:16px; }
+.cat-card{
+  border:1px solid var(--pcb-line); border-radius:var(--radius-m);
+  background:var(--pcb-900); padding:20px 16px; text-align:left;
+  transition:border-color .15s ease, transform .15s ease;
+}
+.cat-card:hover{ border-color:var(--copper); transform:translateY(-3px); }
+.cat-card .ic{ width:38px; height:38px; margin-bottom:14px; color:var(--copper-bright); }
+.cat-card h3{ font-size:.98rem; margin:0 0 4px; }
+.cat-card span{ font-size:.78rem; color:var(--silver); }
+
+/* ---------- Promo banner ---------- */
+.promo{
+  border:1px solid var(--copper-dim); border-radius:var(--radius-m);
+  background:linear-gradient(120deg, var(--pcb-800), var(--pcb-900));
+  padding:34px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
+}
+.promo h3{ font-size:1.3rem; margin:0 0 6px; }
+.promo p{ margin:0; color:var(--silk-dim); }
+
+/* ---------- Products ---------- */
+.product-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+.card{
+  border:1px solid var(--pcb-line); border-radius:var(--radius-m);
+  background:var(--pcb-900); overflow:hidden; display:flex; flex-direction:column;
+  transition:border-color .15s ease, transform .15s ease;
+}
+.card:hover{ border-color:var(--copper); transform:translateY(-4px); }
+.card-media{
+  aspect-ratio:4/3; background:var(--pcb-800);
+  display:flex; align-items:center; justify-content:center; position:relative;
+  border-bottom:1px solid var(--pcb-line);
+}
+.card-media svg{ width:56%; height:56%; }
+.card-cat{
+  position:absolute; top:10px; left:10px;
+  font-family:var(--font-mono); font-size:.65rem; color:var(--copper-bright);
+  background:rgba(8,26,20,.85); border:1px solid var(--pcb-line);
+  padding:3px 8px; border-radius:12px;
+}
+.card-body{ padding:16px; display:flex; flex-direction:column; gap:8px; flex:1; }
+.card-body h3{ font-size:.98rem; margin:0; }
+.card-body p{ font-size:.84rem; color:var(--silk-dim); margin:0; flex:1; }
+.card-foot{ display:flex; align-items:center; justify-content:space-between; margin-top:8px; }
+.price{ font-family:var(--font-mono); font-weight:600; color:var(--copper-bright); font-size:1.05rem; }
+.price small{ color:var(--silver); font-size:.7rem; font-weight:400; }
+.stock{ font-size:.72rem; color:var(--ok); }
+.stock.low{ color:var(--danger); }
+
+/* filters */
+.filters-bar{
+  display:flex; gap:12px; align-items:center; flex-wrap:wrap;
+  border:1px solid var(--pcb-line); border-radius:var(--radius-m);
+  background:var(--pcb-900); padding:14px 16px; margin-bottom:28px;
+}
+.search-field{
+  flex:1; min-width:220px; display:flex; align-items:center; gap:8px;
+  background:var(--pcb-950); border:1px solid var(--pcb-line); border-radius:var(--radius-s);
+  padding:9px 12px;
+}
+.search-field input{
+  background:none; border:none; color:var(--silk); font-family:var(--font-body);
+  width:100%; font-size:.9rem;
+}
+.search-field input:focus{ outline:none; }
+select, .select{
+  background:var(--pcb-950); border:1px solid var(--pcb-line); color:var(--silk);
+  border-radius:var(--radius-s); padding:9px 10px; font-size:.86rem; font-family:var(--font-body);
+}
+.chip-filters{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px; }
+.chip-filter{
+  padding:7px 14px; border-radius:16px; font-size:.82rem;
+  border:1px solid var(--pcb-line); color:var(--silk-dim); background:var(--pcb-900);
+}
+.chip-filter.active{ border-color:var(--copper); color:var(--copper-bright); }
+
+.empty-state{ text-align:center; padding:60px 20px; color:var(--silver); }
+
+/* ---------- Cart page ---------- */
+.cart-layout{ display:grid; grid-template-columns:1.6fr 1fr; gap:28px; align-items:start; }
+.cart-row{
+  display:grid; grid-template-columns:64px 1fr auto auto auto; gap:14px; align-items:center;
+  padding:14px 0; border-bottom:1px solid var(--pcb-line);
+}
+.cart-row .thumb{ width:64px; height:64px; border-radius:var(--radius-s); background:var(--pcb-800); border:1px solid var(--pcb-line); display:flex; align-items:center; justify-content:center; }
+.cart-row .thumb svg{ width:60%; height:60%; }
+.cart-row h4{ margin:0 0 3px; font-size:.92rem; }
+.cart-row .cat-lbl{ font-size:.72rem; color:var(--silver); }
+.qty-control{ display:flex; align-items:center; border:1px solid var(--pcb-line); border-radius:var(--radius-s); }
+.qty-control button{ background:none; border:none; color:var(--silk); width:28px; height:28px; }
+.qty-control button:hover{ color:var(--copper-bright); }
+.qty-control span{ width:26px; text-align:center; font-family:var(--font-mono); font-size:.86rem; }
+.remove-btn{ color:var(--silver); background:none; border:none; font-size:.78rem; }
+.remove-btn:hover{ color:var(--danger); }
+.line-total{ font-family:var(--font-mono); color:var(--copper-bright); font-weight:600; }
+
+.summary-box{
+  border:1px solid var(--pcb-line); border-radius:var(--radius-m);
+  background:var(--pcb-900); padding:22px;
+}
+.summary-row{ display:flex; justify-content:space-between; padding:8px 0; font-size:.9rem; color:var(--silk-dim); }
+.summary-row.total{ color:var(--silk); font-size:1.1rem; font-weight:600; border-top:1px solid var(--pcb-line); margin-top:8px; padding-top:14px; }
+.summary-row.total .price{ font-size:1.15rem; }
+
+/* ---------- Checkout ---------- */
+.checkout-layout{ display:grid; grid-template-columns:1fr .9fr; gap:32px; align-items:start; }
+.field{ margin-bottom:18px; }
+.field label{ display:block; font-size:.86rem; color:var(--silk-dim); margin-bottom:6px; }
+.field input, .field textarea{
+  width:100%; background:var(--pcb-900); border:1px solid var(--pcb-line); color:var(--silk);
+  border-radius:var(--radius-s); padding:11px 12px; font-family:var(--font-body); font-size:.94rem;
+}
+.field input:focus, .field textarea:focus{ outline:none; border-color:var(--copper); }
+.field .hint{ font-size:.76rem; color:var(--silver); margin-top:5px; }
+.field .err{ font-size:.76rem; color:var(--danger); margin-top:5px; display:none; }
+.field.invalid input, .field.invalid textarea{ border-color:var(--danger); }
+.field.invalid .err{ display:block; }
+.mini-line{ display:flex; justify-content:space-between; font-size:.86rem; padding:6px 0; color:var(--silk-dim); }
+
+/* ---------- Forms / admin ---------- */
+.panel{ border:1px solid var(--pcb-line); border-radius:var(--radius-m); background:var(--pcb-900); padding:24px; }
+table{ width:100%; border-collapse:collapse; font-size:.88rem; }
+th{ text-align:left; color:var(--silver); font-weight:500; font-size:.75rem; text-transform:uppercase; letter-spacing:.04em; padding:10px 8px; border-bottom:1px solid var(--pcb-line); }
+td{ padding:10px 8px; border-bottom:1px solid var(--pcb-line); vertical-align:middle; }
+.table-thumb{ width:38px; height:38px; border-radius:var(--radius-s); background:var(--pcb-800); border:1px solid var(--pcb-line); display:flex; align-items:center; justify-content:center; }
+.table-thumb svg{ width:60%; height:60%; }
+.tag-cat{ font-family:var(--font-mono); font-size:.7rem; color:var(--copper-bright); background:var(--pcb-800); border:1px solid var(--pcb-line); padding:2px 8px; border-radius:10px; }
+.row-actions{ display:flex; gap:8px; }
+.icon-action{ background:none; border:1px solid var(--pcb-line); color:var(--silk-dim); border-radius:var(--radius-s); width:30px; height:30px; display:flex; align-items:center; justify-content:center; }
+.icon-action:hover{ color:var(--silk); border-color:var(--copper); }
+
+.modal-backdrop{
+  position:fixed; inset:0; background:rgba(4,12,9,.72); backdrop-filter:blur(2px);
+  display:flex; align-items:center; justify-content:center; z-index:100; padding:20px;
+}
+.modal{ width:100%; max-width:460px; background:var(--pcb-900); border:1px solid var(--pcb-line); border-radius:var(--radius-m); padding:26px; max-height:90vh; overflow-y:auto; }
+.modal h3{ margin-top:0; }
+.hidden{ display:none !important; }
+
+.login-box{ max-width:380px; margin:60px auto; }
+
+.toast{
+  position:fixed; bottom:24px; right:24px; z-index:200;
+  background:var(--pcb-800); border:1px solid var(--copper); color:var(--silk);
+  padding:13px 18px; border-radius:var(--radius-s); font-size:.88rem;
+  display:flex; align-items:center; gap:10px;
+  transform:translateY(20px); opacity:0; pointer-events:none;
+  transition:transform .2s ease, opacity .2s ease;
+}
+.toast.show{ transform:translateY(0); opacity:1; }
+
+/* ---------- Contact ---------- */
+.contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+.contact-info-row{ display:flex; gap:14px; align-items:flex-start; margin-bottom:22px; }
+.contact-info-row .ic{ width:20px; height:20px; color:var(--copper-bright); flex-shrink:0; margin-top:2px; }
+.contact-info-row h4{ margin:0 0 3px; font-size:.94rem; }
+.contact-info-row span{ color:var(--silk-dim); font-size:.88rem; }
+.social-row{ display:flex; gap:10px; margin-top:24px; }
+
+/* ---------- Footer ---------- */
+.site-footer{ border-top:1px solid var(--pcb-line); background:var(--pcb-900); padding:52px 0 28px; margin-top:40px; }
+.footer-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1.2fr; gap:32px; margin-bottom:36px; }
+.footer-grid h4{ font-size:.86rem; color:var(--silk); margin-bottom:14px; }
+.footer-grid p{ color:var(--silk-dim); font-size:.86rem; }
+.footer-grid ul li{ margin-bottom:9px; }
+.footer-grid ul a{ color:var(--silk-dim); font-size:.86rem; }
+.footer-grid ul a:hover{ color:var(--copper-bright); }
+.footer-bottom{ display:flex; justify-content:space-between; align-items:center; padding-top:22px; border-top:1px solid var(--pcb-line); font-size:.8rem; color:var(--silver); flex-wrap:wrap; gap:10px; }
+
+/* ---------- Breadcrumb ---------- */
+.breadcrumb{ font-size:.82rem; color:var(--silver); margin-bottom:20px; }
+.breadcrumb a{ color:var(--silver); }
+.breadcrumb a:hover{ color:var(--copper-bright); }
+.page-head{ padding:44px 0 8px; }
+.page-head h1{ font-size:2rem; }
+
+/* ---------- Responsive ---------- */
+@media (max-width:1024px){
+  .cat-grid{ grid-template-columns:repeat(3,1fr); }
+  .product-grid{ grid-template-columns:repeat(3,1fr); }
+  .hero-grid{ grid-template-columns:1fr; }
+  .cart-layout, .checkout-layout, .contact-grid{ grid-template-columns:1fr; }
+  .footer-grid{ grid-template-columns:1fr 1fr; }
+}
+@media (max-width:720px){
+  .main-nav{
+    position:fixed; top:69px; left:0; right:0; bottom:0;
+    background:var(--pcb-950); flex-direction:column; gap:0;
+    padding:10px 24px; transform:translateX(-100%); transition:transform .2s ease;
+    border-top:1px solid var(--pcb-line);
+  }
+  .main-nav.open{ transform:translateX(0); }
+  .main-nav a{ padding:14px 0; border-bottom:1px solid var(--pcb-line); }
+  .nav-toggle{ display:block; }
+  .cat-grid{ grid-template-columns:repeat(2,1fr); }
+  .product-grid{ grid-template-columns:repeat(2,1fr); }
+  .cart-row{ grid-template-columns:48px 1fr; row-gap:8px; }
+  .cart-row .qty-control, .cart-row .line-total, .cart-row .remove-btn{ grid-column:2; justify-self:start; }
+  .hero-grid{ padding:44px 0 40px; }
+  .footer-grid{ grid-template-columns:1fr; }
+  .promo{ flex-direction:column; align-items:flex-start; }
+}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commander — RoboKit.ma</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="commander">
+
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <div class="wrap page-head">
+    <div class="breadcrumb"><a href="index.html">Accueil</a> / <a href="panier.html">Panier</a> / Commander</div>
+    <h1>Finaliser la commande</h1>
+    <p style="color:var(--silk-dim);max-width:60ch;">Aucun paiement en ligne : vous confirmez vos coordonnées, puis votre commande est envoyée directement à notre équipe sur WhatsApp.</p>
+  </div>
+
+  <section class="wrap" id="checkoutSection"></section>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="assets/js/supabase-config.js"></script>
+<script src="assets/js/icons.js"></script>
+<script src="assets/js/data/products-index.js"></script>
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/components.js"></script>
+<script>
+  // Numéro WhatsApp de la boutique (format international, sans "+" ni espaces)
+  const WHATSAPP_NUMBER = "212600000000";
+
+  async function renderCheckout(){
+    if(warnIfNotConfigured("#checkoutSection")) return;
+    const section = document.getElementById("checkoutSection");
+    const items = await cartDetails();
+
+    if(items.length === 0){
+      section.innerHTML = `
+        <div class="empty-state">
+          <p>Votre panier est vide. Ajoutez des produits avant de commander.</p>
+          <a href="produits.html" class="btn btn-copper" style="margin-top:14px;">Parcourir les produits</a>
+        </div>`;
+      return;
+    }
+
+    const lines = items.map(l => `<div class="mini-line"><span>${l.qty} × ${l.product.title}</span><span>${formatPrice(l.subtotal)}</span></div>`).join("");
+    const total = await cartTotal();
+
+    section.innerHTML = `
+      <div class="checkout-layout">
+        <form id="checkoutForm" class="panel" novalidate>
+          <h3 style="margin-top:0;">Vos coordonnées</h3>
+
+          <div class="field" id="fieldName">
+            <label for="custName">Nom complet *</label>
+            <input type="text" id="custName" name="custName" placeholder="ex : Youssef El Amrani" required>
+            <span class="err">Veuillez indiquer votre nom.</span>
+          </div>
+
+          <div class="field" id="fieldPhone">
+            <label for="custPhone">Numéro de téléphone *</label>
+            <input type="tel" id="custPhone" name="custPhone" placeholder="ex : 06 00 00 00 00" required>
+            <span class="hint">Utilisé uniquement pour confirmer votre commande.</span>
+            <span class="err">Veuillez indiquer un numéro de téléphone valide.</span>
+          </div>
+
+          <div class="field">
+            <label for="custNote">Message / note (optionnel)</label>
+            <textarea id="custNote" name="custNote" rows="4" placeholder="Précisions sur la livraison, horaires, etc."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-copper btn-block">Confirmer et envoyer sur WhatsApp</button>
+          <p class="hint" style="text-align:center;margin-top:12px;">Vous serez redirigé vers WhatsApp avec votre commande pré-remplie.</p>
+        </form>
+
+        <div class="summary-box">
+          <h3 style="font-size:1.1rem;">Récapitulatif</h3>
+          ${lines}
+          <div class="summary-row total"><span>Total</span><span class="price">${formatPrice(total)}</span></div>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("checkoutForm").addEventListener("submit", handleCheckoutSubmit);
+  }
+
+  async function handleCheckoutSubmit(e){
+    e.preventDefault();
+    const name = document.getElementById("custName").value.trim();
+    const phone = document.getElementById("custPhone").value.trim();
+    const note = document.getElementById("custNote").value.trim();
+
+    const fieldName = document.getElementById("fieldName");
+    const fieldPhone = document.getElementById("fieldPhone");
+    fieldName.classList.remove("invalid");
+    fieldPhone.classList.remove("invalid");
+
+    let valid = true;
+    if(name.length < 2){ fieldName.classList.add("invalid"); valid = false; }
+    const phoneDigits = phone.replace(/[^0-9+]/g, "");
+    if(phoneDigits.length < 9){ fieldPhone.classList.add("invalid"); valid = false; }
+    if(!valid) return;
+
+    const items = await cartDetails();
+    const total = await cartTotal();
+
+    let message = `Nouvelle commande — RoboKit.ma%0A%0A`;
+    message += `*Client :* ${name}%0A`;
+    message += `*Téléphone :* ${phone}%0A%0A`;
+    message += `*Produits commandés :*%0A`;
+    items.forEach(l => {
+      message += `- ${l.qty} × ${l.product.title} — ${formatPrice(l.subtotal)}%0A`;
+    });
+    message += `%0A*Total : ${formatPrice(total)}*%0A`;
+    if(note){ message += `%0A*Note :* ${note}%0A`; }
+
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+    clearCart();
+    window.location.href = url;
+  }
+
+  document.addEventListener("DOMContentLoaded", renderCheckout);
+</script>
+</body>
+</html>

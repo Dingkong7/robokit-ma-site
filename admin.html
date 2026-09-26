@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administration — RoboKit.ma</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="admin">
+
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <div class="wrap page-head">
+    <div class="breadcrumb"><a href="index.html">Accueil</a> / Administration</div>
+    <h1>Espace administration</h1>
+    <p style="color:var(--silk-dim);max-width:70ch;">Ajoutez, modifiez ou supprimez des produits du catalogue. Ces changements sont enregistrés dans ce navigateur.</p>
+  </div>
+
+  <!-- Écran de connexion -->
+  <section class="wrap" id="loginSection">
+    <div class="panel login-box">
+      <h3 style="margin-top:0;">Connexion administrateur</h3>
+      <div class="field">
+        <label for="adminEmail">Email</label>
+        <input type="email" id="adminEmail" placeholder="admin@robokit.ma">
+      </div>
+      <div class="field">
+        <label for="adminPass">Mot de passe</label>
+        <input type="password" id="adminPass" placeholder="Votre mot de passe">
+      </div>
+      <button class="btn btn-copper btn-block" onclick="attemptLogin()">Se connecter</button>
+      <p class="hint" style="margin-top:12px;">Compte créé depuis Supabase > Authentication. Voir le README pour la procédure.</p>
+    </div>
+  </section>
+
+  <!-- Panneau admin -->
+  <section class="wrap hidden" id="adminSection">
+    <div class="filters-bar">
+      <div class="search-field">
+        <span>🔍</span>
+        <input type="text" id="adminSearch" placeholder="Rechercher un produit...">
+      </div>
+      <select id="adminCatFilter">
+        <option value="all">Toutes les catégories</option>
+      </select>
+      <button class="btn btn-copper" onclick="openProductModal()">+ Ajouter un produit</button>
+      <button class="btn btn-ghost btn-sm" onclick="logoutAdmin()">Déconnexion</button>
+    </div>
+
+    <div class="panel" style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Produit</th>
+            <th>Catégorie</th>
+            <th>Prix</th>
+            <th>Stock</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="adminTableBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Modal ajout/édition -->
+  <div class="modal-backdrop hidden" id="productModalBackdrop">
+    <div class="modal">
+      <h3 id="modalTitle">Ajouter un produit</h3>
+      <form id="productForm">
+        <input type="hidden" id="pId">
+        <div class="field">
+          <label for="pTitle">Titre *</label>
+          <input type="text" id="pTitle" required>
+        </div>
+        <div class="field">
+          <label for="pCategory">Catégorie *</label>
+          <select id="pCategory" required></select>
+        </div>
+        <div class="field">
+          <label for="pDescription">Description courte</label>
+          <textarea id="pDescription" rows="3"></textarea>
+        </div>
+        <div class="field">
+          <label for="pPrice">Prix (MAD) *</label>
+          <input type="number" id="pPrice" min="0" step="0.01" required>
+        </div>
+        <div class="field">
+          <label for="pStock">Stock disponible</label>
+          <input type="number" id="pStock" min="0" step="1" value="10">
+        </div>
+        <div style="display:flex;gap:10px;margin-top:8px;">
+          <button type="button" class="btn btn-ghost btn-block" onclick="closeProductModal()">Annuler</button>
+          <button type="submit" class="btn btn-copper btn-block">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="assets/js/supabase-config.js"></script>
+<script src="assets/js/icons.js"></script>
+<script src="assets/js/data/products-index.js"></script>
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/components.js"></script>
+<script src="assets/js/admin.js"></script>
+</body>
+</html>

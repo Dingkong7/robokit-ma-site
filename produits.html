@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Produits — RoboKit.ma</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="produits">
+
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <div class="wrap page-head">
+    <div class="breadcrumb"><a href="index.html">Accueil</a> / Produits</div>
+    <h1>Tous les produits</h1>
+    <p style="color:var(--silk-dim);max-width:60ch;">Recherchez et filtrez parmi l'ensemble de notre catalogue de composants électroniques et robotiques.</p>
+  </div>
+
+  <section class="wrap" style="padding-top:28px;">
+    <div class="filters-bar">
+      <div class="search-field">
+        <span>🔍</span>
+        <input type="text" id="searchInput" placeholder="Rechercher un produit (ex : Arduino, capteur, moteur...)">
+      </div>
+      <select id="sortSelect">
+        <option value="default">Trier par : pertinence</option>
+        <option value="price-asc">Prix croissant</option>
+        <option value="price-desc">Prix décroissant</option>
+        <option value="name-asc">Nom (A-Z)</option>
+      </select>
+    </div>
+
+    <div class="chip-filters" id="chipFilters"></div>
+
+    <div class="product-grid" id="productGrid"></div>
+  </section>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="assets/js/supabase-config.js"></script>
+<script src="assets/js/icons.js"></script>
+<script src="assets/js/data/products-index.js"></script>
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/components.js"></script>
+<script>
+  let activeCategory = getQueryParam("cat") || "all";
+
+  function renderChips(){
+    const chips = [{id:"all", label:"Tous"}, ...CATEGORIES.map(c => ({id:c.id, label:c.label}))];
+    const el = document.getElementById("chipFilters");
+    el.innerHTML = chips.map(c =>
+      `<button class="chip-filter ${activeCategory===c.id?'active':''}" data-chip="${c.id}">${c.label}</button>`
+    ).join("");
+    el.querySelectorAll("[data-chip]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        activeCategory = btn.getAttribute("data-chip");
+        renderChips();
+        applyFilters();
+      });
+    });
+  }
+
+  async function applyFilters(){
+    const query = document.getElementById("searchInput").value.trim().toLowerCase();
+    const sort = document.getElementById("sortSelect").value;
+    let list = await getAllProducts();
+
+    if(activeCategory !== "all"){
+      list = list.filter(p => p.category === activeCategory);
+    }
+    if(query){
+      list = list.filter(p =>
+        p.title.toLowerCase().includes(query) ||
+        p.description.toLowerCase().includes(query) ||
+        categoryLabel(p.category).toLowerCase().includes(query)
+      );
+    }
+    if(sort === "price-asc") list = [...list].sort((a,b) => a.price - b.price);
+    if(sort === "price-desc") list = [...list].sort((a,b) => b.price - a.price);
+    if(sort === "name-asc") list = [...list].sort((a,b) => a.title.localeCompare(b.title));
+
+    renderProductGrid("productGrid", list);
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    if(warnIfNotConfigured("#productGrid")) return;
+    renderChips();
+    applyFilters();
+    document.getElementById("searchInput").addEventListener("input", applyFilters);
+    document.getElementById("sortSelect").addEventListener("change", applyFilters);
+  });
+</script>
+</body>
+</html>

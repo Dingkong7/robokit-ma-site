@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — RoboKit.ma</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="contact">
+
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <div class="wrap page-head">
+    <div class="breadcrumb"><a href="index.html">Accueil</a> / Contact</div>
+    <h1>Contactez-nous</h1>
+    <p style="color:var(--silk-dim);max-width:60ch;">Une question sur un produit, une commande ou un projet ? Notre équipe vous répond rapidement.</p>
+  </div>
+
+  <section class="wrap">
+    <div class="contact-grid">
+      <div class="panel">
+        <h3 style="margin-top:0;">Informations</h3>
+
+        <div class="contact-info-row">
+          <span class="ic">📍</span>
+          <div><h4>Adresse</h4><span>Quartier Sidi Maârouf, Casablanca, Maroc</span></div>
+        </div>
+        <div class="contact-info-row">
+          <span class="ic">📞</span>
+          <div><h4>Téléphone</h4><span>+212 6 00 00 00 00</span></div>
+        </div>
+        <div class="contact-info-row">
+          <span class="ic">✉️</span>
+          <div><h4>Email</h4><span>contact@robokit.ma</span></div>
+        </div>
+        <div class="contact-info-row">
+          <span class="ic">🕒</span>
+          <div><h4>Horaires</h4><span>Lun – Sam : 9h00 – 19h00</span></div>
+        </div>
+
+        <div class="social-row">
+          <a href="#" class="btn btn-outline btn-sm">WhatsApp</a>
+          <a href="#" class="btn btn-outline btn-sm">Instagram</a>
+          <a href="#" class="btn btn-outline btn-sm">Facebook</a>
+        </div>
+      </div>
+
+      <form class="panel" id="contactForm">
+        <h3 style="margin-top:0;">Envoyer un message</h3>
+        <div class="field">
+          <label for="cName">Nom</label>
+          <input type="text" id="cName" placeholder="Votre nom" required>
+        </div>
+        <div class="field">
+          <label for="cEmail">Email</label>
+          <input type="email" id="cEmail" placeholder="vous@exemple.com" required>
+        </div>
+        <div class="field">
+          <label for="cMsg">Message</label>
+          <textarea id="cMsg" rows="5" placeholder="Votre message..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-copper btn-block">Envoyer le message</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="assets/js/supabase-config.js"></script>
+<script src="assets/js/icons.js"></script>
+<script src="assets/js/data/products-index.js"></script>
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/components.js"></script>
+<script>
+  document.getElementById("contactForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    showToast("Message envoyé — nous vous répondrons bientôt.");
+    this.reset();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+/* ==========================================================================
+   Rendu des cartes produits / catégories + recherche & filtres
+   ========================================================================== */
+
+function productCardHtml(p){
+  const lowStock = p.stock <= 5;
+  return `
+    <div class="card">
+      <div class="card-media">
+        <span class="card-cat">${categoryLabel(p.category)}</span>
+        ${categoryIcon(p.category, "")}
+      </div>
+      <div class="card-body">
+        <h3>${p.title}</h3>
+        <p>${p.description}</p>
+        <div class="card-foot">
+          <span class="price">${formatPrice(p.price)}</span>
+          <span class="stock ${lowStock?'low':''}">${lowStock? (p.stock+' restants') : 'En stock'}</span>
+        </div>
+        <button class="btn btn-copper btn-block btn-sm" onclick="addToCart('${p.id}',1)">Ajouter au panier</button>
+      </div>
+    </div>
+  `;
+}
+
+function categoryCardHtml(c){
+  return `
+    <a class="cat-card" href="produits.html?cat=${c.id}">
+      ${categoryIcon(c.id, "ic")}
+      <h3>${c.label}</h3>
+      <span>${c.desc}</span>
+    </a>
+  `;
+}
+
+function renderCategoryGrid(targetId){
+  const el = document.getElementById(targetId);
+  if(!el) return;
+  el.innerHTML = CATEGORIES.map(categoryCardHtml).join("");
+}
+
+function renderProductGrid(targetId, products){
+  const el = document.getElementById(targetId);
+  if(!el) return;
+  if(products.length === 0){
+    el.innerHTML = `<div class="empty-state">Aucun produit ne correspond à votre recherche.</div>`;
+    return;
+  }
+  el.innerHTML = products.map(productCardHtml).join("");
+}
+
+function getQueryParam(name){
+  return new URLSearchParams(window.location.search).get(name);
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catégories — RoboKit.ma</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="categories">
+
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <div class="wrap page-head">
+    <div class="breadcrumb"><a href="index.html">Accueil</a> / Catégories</div>
+    <h1>Catégories de produits</h1>
+    <p style="color:var(--silk-dim);max-width:60ch;">Explorez notre catalogue organisé par usage : développement, affichage, alimentation, composants, outils et robotique.</p>
+  </div>
+
+  <section class="wrap">
+    <div class="cat-grid" id="allCategoryGrid" style="grid-template-columns:repeat(3,1fr);"></div>
+  </section>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="assets/js/supabase-config.js"></script>
+<script src="assets/js/icons.js"></script>
+<script src="assets/js/data/products-index.js"></script>
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/components.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    renderCategoryGrid("allCategoryGrid");
+  });
+</script>
+</body>
+</html>
