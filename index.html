@@ -49,20 +49,9 @@
 
   <section class="wrap">
     <div class="section-head">
-<!-- Responsive 728x90 Ad -->
-<div id="responsive-ad" style="
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-  margin: 20px 0 30px;
-">
-  <div id="ad-scale-box" style="
-    width: 728px;
-    height: 90px;
-    flex-shrink: 0;
-    transform-origin: top center;
-  ">
+<!-- RESPONSIVE AD -->
+<div id="ad-container">
+  <div id="ad-wrapper">
     <script>
       atOptions = {
         'key' : '9ff0950379f34d6df6e4eb4b9b71e93b',
@@ -77,27 +66,58 @@
   </div>
 </div>
 
+<style>
+#ad-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    margin: 20px auto 30px;
+}
+
+#ad-wrapper {
+    width: 728px;
+    height: 90px;
+    flex-shrink: 0;
+    transform-origin: top center;
+}
+</style>
+
 <script>
 (function () {
-  const adBox = document.getElementById('ad-scale-box');
-  const container = document.getElementById('responsive-ad');
 
-  function resizeAd() {
-    const availableWidth = container.clientWidth;
+    const container = document.getElementById('ad-container');
+    const wrapper = document.getElementById('ad-wrapper');
 
-    if (availableWidth < 728) {
-      const scale = availableWidth / 728;
+    function resizeAd() {
 
-      adBox.style.transform = `scale(${scale})`;
-      container.style.height = `${90 * scale}px`;
-    } else {
-      adBox.style.transform = 'scale(1)';
-      container.style.height = '90px';
+        const availableWidth = container.clientWidth;
+
+        if (availableWidth < 728) {
+
+            const scale = availableWidth / 728;
+
+            /* Scale the entire ad */
+            wrapper.style.zoom = scale;
+
+            /* Adjust the space occupied by the scaled ad */
+            container.style.height = (90 * scale) + 'px';
+
+        } else {
+
+            wrapper.style.zoom = '1';
+            container.style.height = '90px';
+
+        }
     }
-  }
 
-  resizeAd();
-  window.addEventListener('resize', resizeAd);
+    /* Run after the ad is generated */
+    setTimeout(resizeAd, 500);
+    setTimeout(resizeAd, 1500);
+    setTimeout(resizeAd, 3000);
+
+    window.addEventListener('resize', resizeAd);
+
 })();
 </script>      
       <div>
@@ -112,20 +132,9 @@
 
   <section class="wrap">
     <div class="section-head">
-      <!-- Responsive 728x90 Ad -->
-<div id="responsive-ad" style="
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-  margin: 20px 0 30px;
-">
-  <div id="ad-scale-box" style="
-    width: 728px;
-    height: 90px;
-    flex-shrink: 0;
-    transform-origin: top center;
-  ">
+      <!-- RESPONSIVE AD -->
+<div id="ad-container">
+  <div id="ad-wrapper">
     <script>
       atOptions = {
         'key' : '9ff0950379f34d6df6e4eb4b9b71e93b',
@@ -140,31 +149,63 @@
   </div>
 </div>
 
+<style>
+#ad-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    margin: 20px auto 30px;
+}
+
+#ad-wrapper {
+    width: 728px;
+    height: 90px;
+    flex-shrink: 0;
+    transform-origin: top center;
+}
+</style>
+
 <script>
 (function () {
-  const adBox = document.getElementById('ad-scale-box');
-  const container = document.getElementById('responsive-ad');
 
-  function resizeAd() {
-    const availableWidth = container.clientWidth;
+    const container = document.getElementById('ad-container');
+    const wrapper = document.getElementById('ad-wrapper');
 
-    if (availableWidth < 728) {
-      const scale = availableWidth / 728;
+    function resizeAd() {
 
-      adBox.style.transform = `scale(${scale})`;
-      container.style.height = `${90 * scale}px`;
-    } else {
-      adBox.style.transform = 'scale(1)';
-      container.style.height = '90px';
+        const availableWidth = container.clientWidth;
+
+        if (availableWidth < 728) {
+
+            const scale = availableWidth / 728;
+
+            /* Scale the entire ad */
+            wrapper.style.zoom = scale;
+
+            /* Adjust the space occupied by the scaled ad */
+            container.style.height = (90 * scale) + 'px';
+
+        } else {
+
+            wrapper.style.zoom = '1';
+            container.style.height = '90px';
+
+        }
     }
-  }
 
-  resizeAd();
-  window.addEventListener('resize', resizeAd);
+    /* Run after the ad is generated */
+    setTimeout(resizeAd, 500);
+    setTimeout(resizeAd, 1500);
+    setTimeout(resizeAd, 3000);
+
+    window.addEventListener('resize', resizeAd);
+
 })();
 </script>
       <div>
         <span class="tag">SÉLECTION</span>
+        
         <h2>Produits en vedette</h2>
         <p>Les références les plus demandées par notre communauté de makers.</p>
       </div>
@@ -174,20 +215,9 @@
   </section>
 
 </main>
-<!-- Responsive 728x90 Ad -->
-<div id="responsive-ad" style="
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-  margin: 20px 0 30px;
-">
-  <div id="ad-scale-box" style="
-    width: 728px;
-    height: 90px;
-    flex-shrink: 0;
-    transform-origin: top center;
-  ">
+<!-- RESPONSIVE AD -->
+<div id="ad-container">
+  <div id="ad-wrapper">
     <script>
       atOptions = {
         'key' : '9ff0950379f34d6df6e4eb4b9b71e93b',
@@ -202,27 +232,58 @@
   </div>
 </div>
 
+<style>
+#ad-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    margin: 20px auto 30px;
+}
+
+#ad-wrapper {
+    width: 728px;
+    height: 90px;
+    flex-shrink: 0;
+    transform-origin: top center;
+}
+</style>
+
 <script>
 (function () {
-  const adBox = document.getElementById('ad-scale-box');
-  const container = document.getElementById('responsive-ad');
 
-  function resizeAd() {
-    const availableWidth = container.clientWidth;
+    const container = document.getElementById('ad-container');
+    const wrapper = document.getElementById('ad-wrapper');
 
-    if (availableWidth < 728) {
-      const scale = availableWidth / 728;
+    function resizeAd() {
 
-      adBox.style.transform = `scale(${scale})`;
-      container.style.height = `${90 * scale}px`;
-    } else {
-      adBox.style.transform = 'scale(1)';
-      container.style.height = '90px';
+        const availableWidth = container.clientWidth;
+
+        if (availableWidth < 728) {
+
+            const scale = availableWidth / 728;
+
+            /* Scale the entire ad */
+            wrapper.style.zoom = scale;
+
+            /* Adjust the space occupied by the scaled ad */
+            container.style.height = (90 * scale) + 'px';
+
+        } else {
+
+            wrapper.style.zoom = '1';
+            container.style.height = '90px';
+
+        }
     }
-  }
 
-  resizeAd();
-  window.addEventListener('resize', resizeAd);
+    /* Run after the ad is generated */
+    setTimeout(resizeAd, 500);
+    setTimeout(resizeAd, 1500);
+    setTimeout(resizeAd, 3000);
+
+    window.addEventListener('resize', resizeAd);
+
 })();
 </script>
 <footer class="site-footer" id="site-footer"></footer>
