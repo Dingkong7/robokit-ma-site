@@ -19,8 +19,7 @@ function renderHeader(activePage){
   el.innerHTML = `
     <div class="header-inner wrap">
       <a href="index.html" class="brand">
-        <span class="chip">&lt;/&gt;</span>
-        RoboKit<span style="color:var(--copper-bright)">.ma</span>
+        <img src="assets/images/logo.png" alt="RoboKit.ma" class="brand-logo">
       </a>
       <nav class="main-nav" id="mainNav">${navHtml}</nav>
       <div class="header-actions">
@@ -67,7 +66,7 @@ function renderFooter(){
         </div>
         <div>
           <h4>Contact</h4>
-          <p>Casablanca, Maroc<br>+212 6 00 00 00 00<br>contact@robokit.ma</p>
+          <p>Berrechid, Casablanca-Settat, Maroc<br>06 49 40 88 26<br>robokitservice@gmail.com</p>
           <div class="social-row">
             <a href="#" class="icon-btn" aria-label="WhatsApp" style="width:34px;height:34px;">W</a>
             <a href="#" class="icon-btn" aria-label="Instagram" style="width:34px;height:34px;">I</a>
