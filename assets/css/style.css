@@ -10,16 +10,16 @@
    change — this file is a drop-in replacement for assets/css/style.css.
    ========================================================================== */
 /* =========================================================
-   FIX: 9ff09503... (728x90) ad — scale instead of clip on mobile
+   FIX: 9ff09503... (728x90) ad — scale + center on mobile
    Appended only, nothing above this is modified.
    ========================================================= */
 @media (max-width: 728px) {
   #container-9ff0950379f34d6df6e4eb4b9b71e93b {
     width: 728px !important;
     max-width: none !important;
-    transform: scale(calc((100vw - 36px) / 728));
-    transform-origin: top left;
-    height: calc(90px * ((100vw - 36px) / 728)) !important;
+    transform: scale(calc(100vw / 728));
+    transform-origin: top center;
+    height: calc(90px * (100vw / 728)) !important;
     overflow: visible !important;
   }
 }
