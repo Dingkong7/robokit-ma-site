@@ -10,17 +10,22 @@
    change — this file is a drop-in replacement for assets/css/style.css.
    ========================================================================== */
 /* =========================================================
-   FIX: 9ff09503... (728x90) ad — scale + center on mobile
-   Appended only, nothing above this is modified.
+   FIX: 728x90 ad — scale + center on mobile, untouched on desktop
+   Targets our own wrapper class, so it works regardless of
+   whatever markup/ID the ad network injects inside it.
    ========================================================= */
+.ad-728-center{
+  display:flex;
+  justify-content:center;
+  width:100%;
+}
+
 @media (max-width: 728px) {
-  #container-9ff0950379f34d6df6e4eb4b9b71e93b {
-    width: 728px !important;
-    max-width: none !important;
+  .ad-728-center{
     transform: scale(calc(100vw / 728));
     transform-origin: top center;
-    height: calc(90px * (100vw / 728)) !important;
-    overflow: visible !important;
+    height: calc(90px * (100vw / 728));
+    overflow: visible;
   }
 }
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
