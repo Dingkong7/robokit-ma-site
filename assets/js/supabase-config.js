@@ -10,8 +10,17 @@ const SUPABASE_URL = "https://yzqtpssbrbvfbrsbdndj.supabase.co";       // ex : h
 const SUPABASE_ANON_KEY = "sb_publishable_qJzwsnt_9Cuj8e_tg_9L9g_VZtAWArw";
 
 const SUPABASE_CONFIGURED = !SUPABASE_URL.includes("YOUR_SUPABASE_URL");
+
+/* persistSession: false => la session vit uniquement en mémoire.
+   Fermer l'onglet ou rafraîchir la page (F5) efface la session,
+   ce qui oblige à se reconnecter à chaque fois. */
 const sb = SUPABASE_CONFIGURED
-  ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: true,
+      }
+    })
   : null;
 
 /* Affiche un bandeau d'avertissement si la configuration n'a pas été faite,
