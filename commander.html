@@ -36,7 +36,6 @@
   // Numéros WhatsApp (format international, sans "+" ni espaces)
   const WHATSAPP_NUMBERS = [
     "212649408826",   // vous
-    "212713472979"    // <-- remplacez par le numéro de votre partenaire
   ];
 
   async function renderCheckout(){
@@ -195,17 +194,15 @@
 
     clearCart();
 
-    // Ouvre un onglet WhatsApp par numéro configuré.
-    // Le premier numéro redirige la page actuelle (comportement inchangé pour le client),
-    // les numéros suivants s'ouvrent dans de nouveaux onglets.
-    WHATSAPP_NUMBERS.forEach((number, index) => {
-      const url = `https://wa.me/${number}?text=${message}`;
-      if(index === 0){
-        window.location.href = url;
-      } else {
-        window.open(url, "_blank");
-      }
-    });
+    // Ouvre d'abord les numéros supplémentaires dans de nouveaux onglets
+    // (avant la redirection, sinon la navigation coupe le script trop tôt),
+    // puis redirige la page actuelle vers le premier numéro.
+    for(let i = 1; i < WHATSAPP_NUMBERS.length; i++){
+      const url = `https://wa.me/${WHATSAPP_NUMBERS[i]}?text=${message}`;
+      window.open(url, "_blank");
+    }
+    const mainUrl = `https://wa.me/${WHATSAPP_NUMBERS[0]}?text=${message}`;
+    window.location.href = mainUrl;
   }
 
   document.addEventListener("DOMContentLoaded", renderCheckout);
