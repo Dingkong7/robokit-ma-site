@@ -33,8 +33,11 @@
 <script src="assets/js/main.js"></script>
 <script src="assets/js/components.js"></script>
 <script>
-  // Numéro WhatsApp de la boutique (format international, sans "+" ni espaces)
-  const WHATSAPP_NUMBER = "212649408826";
+  // Numéros WhatsApp (format international, sans "+" ni espaces)
+  const WHATSAPP_NUMBERS = [
+    "212649408826",   // vous
+    "212713472979"    // <-- remplacez par le numéro de votre partenaire
+  ];
 
   async function renderCheckout(){
     if(warnIfNotConfigured("#checkoutSection")) return;
@@ -190,9 +193,19 @@
     message += `%0A*Total : ${formatPrice(total)}*%0A`;
     if(note){ message += `%0A*Note :* ${note}%0A`; }
 
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
     clearCart();
-    window.location.href = url;
+
+    // Ouvre un onglet WhatsApp par numéro configuré.
+    // Le premier numéro redirige la page actuelle (comportement inchangé pour le client),
+    // les numéros suivants s'ouvrent dans de nouveaux onglets.
+    WHATSAPP_NUMBERS.forEach((number, index) => {
+      const url = `https://wa.me/${number}?text=${message}`;
+      if(index === 0){
+        window.location.href = url;
+      } else {
+        window.open(url, "_blank");
+      }
+    });
   }
 
   document.addEventListener("DOMContentLoaded", renderCheckout);
