@@ -3,7 +3,40 @@
    mot de passe côté client) + CRUD produits stockés dans Supabase.
    Les écritures ici sont immédiatement visibles par tous les visiteurs,
    car elles passent par la même base de données que produits.html.
+
+   Sécurité de session :
+   - La session Supabase n'est plus persistée (voir supabase-config.js),
+     donc fermer l'onglet ou rafraîchir la page déconnecte automatiquement.
+   - En plus, un minuteur d'inactivité déconnecte après 5 minutes sans
+     action (souris, clavier, clic, défilement) pendant que la page reste
+     ouverte.
    ========================================================================== */
+
+const ADMIN_IDLE_LIMIT_MS = 5 * 60 * 1000; // 5 minutes — ajustez ici si besoin
+let adminIdleTimer = null;
+
+function resetAdminIdleTimer(){
+  clearTimeout(adminIdleTimer);
+  // Ne redémarre le minuteur que si le panneau admin est visible (connecté)
+  const adminSection = document.getElementById("adminSection");
+  if(adminSection && !adminSection.classList.contains("hidden")){
+    adminIdleTimer = setTimeout(async () => {
+      await logoutAdmin();
+      showToast("Déconnecté après 5 minutes d'inactivité");
+    }, ADMIN_IDLE_LIMIT_MS);
+  }
+}
+
+function startAdminIdleWatch(){
+  ["mousemove", "mousedown", "keydown", "scroll", "touchstart", "click"].forEach(evt => {
+    document.addEventListener(evt, resetAdminIdleTimer, { passive: true });
+  });
+  resetAdminIdleTimer();
+}
+
+function stopAdminIdleWatch(){
+  clearTimeout(adminIdleTimer);
+}
 
 async function attemptLogin(){
   const email = document.getElementById("adminEmail").value.trim();
@@ -19,6 +52,7 @@ async function attemptLogin(){
 
 async function logoutAdmin(){
   await sb.auth.signOut();
+  stopAdminIdleWatch();
   document.getElementById("adminSection").classList.add("hidden");
   document.getElementById("loginSection").classList.remove("hidden");
 }
@@ -28,6 +62,7 @@ async function showAdminPanel(){
   document.getElementById("adminSection").classList.remove("hidden");
   populateCategorySelects();
   await renderAdminTable();
+  startAdminIdleWatch();
 }
 
 function populateCategorySelects(){
@@ -112,7 +147,10 @@ async function confirmDeleteProduct(id){
 document.addEventListener("DOMContentLoaded", async () => {
   if(warnIfNotConfigured("#loginSection")) return;
 
-  // Si une session Supabase est déjà active (retour sur la page), on saute la connexion
+  // La session n'étant plus persistée (voir supabase-config.js), il n'y a
+  // normalement pas de session active au chargement de la page — l'écran
+  // de connexion s'affiche donc systématiquement après un rafraîchissement
+  // ou une réouverture de la page.
   const { data } = await sb.auth.getSession();
   if(data && data.session){
     showAdminPanel();
