@@ -9,6 +9,25 @@
    previous stylesheet still exists here. Nothing in HTML/JS needed to
    change — this file is a drop-in replacement for assets/css/style.css.
    ========================================================================== */
+   /* =========================================================
+   FIX: 728x90 ad — scale + center on mobile, untouched on desktop
+   Targets our own wrapper class, so it works regardless of
+   whatever markup/ID the ad network injects inside it.
+   ========================================================= */
+.ad-728-center{
+  display:flex;
+  justify-content:center;
+  width:100%;
+}
+
+@media (max-width: 728px) {
+  .ad-728-center{
+    transform: scale(calc(100vw / 728));
+    transform-origin: top center;
+    height: calc(90px * (100vw / 728));
+    overflow: visible;
+  }
+}
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
 
@@ -630,19 +649,4 @@ tbody tr:hover{ background:rgba(62,230,208,.04); }
   .btn-sm{ min-height:40px; padding:9px 14px; }
   .page-head h1{ font-size:1.4rem; }
   .modal{ padding:20px; }
-}
-/* =========================================================
-   FIX: 728x90 ad iframe — responsive on mobile, untouched on desktop
-   Targets the iframe's own width/height attributes directly,
-   so it works no matter what wrapper markup the ad network injects.
-   ========================================================= */
-@media (max-width: 728px) {
-  iframe[width="728"][height="90"] {
-    width: 100% !important;
-    max-width: 728px !important;
-    height: auto !important;
-    aspect-ratio: 728 / 90;
-    display: block !important;
-    margin: 0 auto !important;
-  }
 }
