@@ -37,6 +37,28 @@ function categoryCardHtml(c){
   `;
 }
 
+function categoryCardDetailHtml(c){
+  const subs = (c.subs || []).map(s =>
+    `<li><a href="produits.html?cat=${c.id}&sub=${s.id}">${s.label}</a></li>`
+  ).join("");
+  return `
+    <div class="cat-card cat-card-detail">
+      <a class="cat-head" href="produits.html?cat=${c.id}">
+        ${categoryIcon(c.id, "ic")}
+        <h3>${c.label}</h3>
+        <span>${c.desc}</span>
+      </a>
+      ${subs ? `<ul class="cat-sublist">${subs}</ul>` : ""}
+    </div>
+  `;
+}
+
+function renderCategoryGridDetailed(targetId){
+  const el = document.getElementById(targetId);
+  if(!el) return;
+  el.innerHTML = CATEGORIES.map(categoryCardDetailHtml).join("");
+}
+
 function renderCategoryGrid(targetId){
   const el = document.getElementById(targetId);
   if(!el) return;

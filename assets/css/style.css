@@ -655,3 +655,11 @@ tbody tr:hover{ background:rgba(62,230,208,.04); }
 .sub-chips{ margin-top:-12px; padding-left:4px; }
 .chip-filter.chip-sub{ font-size:.76rem; min-height:32px; padding:6px 13px; }
 .cat-card .cat-subcount{ display:block; margin-top:8px; font-family:var(--font-mono); font-size:.7rem; color:var(--cyan-bright); }
+
+/* ---- Carte catégorie détaillée (page Catégories) ---- */
+.cat-card-detail{ display:block; }
+.cat-card-detail .cat-head{ display:block; color:inherit; text-decoration:none; }
+.cat-sublist{ list-style:none; margin:16px 0 0; padding:14px 0 0; border-top:1px solid var(--pcb-line); position:relative; display:flex; flex-direction:column; gap:2px; }
+.cat-sublist a{ display:block; padding:5px 0; font-size:.82rem; color:var(--silk-dim); text-decoration:none; transition:color .15s ease, padding-left .15s ease; }
+.cat-sublist a::before{ content:"›"; color:var(--copper-bright); margin-right:8px; }
+.cat-sublist a:hover{ color:var(--cyan-bright); padding-left:4px; }
