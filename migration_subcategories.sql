@@ -1,4 +1,11 @@
--- Seed catalogue RoboKit.ma (nouveau catalogue). Prix et stock à renseigner depuis l'admin.
+-- Migration : sous-catégories + 7e catégorie « Kits » + REMPLACEMENT du catalogue
+-- ATTENTION : supprime TOUS les produits existants puis insère le nouveau catalogue.
+-- À exécuter dans Supabase > SQL Editor.
+alter table products add column if not exists subcategory text default '';
+alter table products add column if not exists image_url text;
+
+delete from products;
+
 insert into products (id, category, subcategory, title, description, price, stock) values
 ('dev-001','developpement','cartes-arduino-officielles-compatibles','Arduino UNO R3 CH340G','Cartes Arduino (Officielles & Compatibles)',0,0),
 ('dev-002','developpement','cartes-arduino-officielles-compatibles','Arduino UNO R3','Cartes Arduino (Officielles & Compatibles)',0,0),

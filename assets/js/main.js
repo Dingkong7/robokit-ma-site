@@ -32,6 +32,7 @@ function categoryCardHtml(c){
       ${categoryIcon(c.id, "ic")}
       <h3>${c.label}</h3>
       <span>${c.desc}</span>
+      ${c.subs && c.subs.length ? `<span class="cat-subcount">${c.subs.length} sous-catégories</span>` : ""}
     </a>
   `;
 }

@@ -24,6 +24,11 @@ const ICONS = {
   outils: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M42 12a10 10 0 0 0-13 13L10 44l6 6 19-19a10 10 0 0 0 13-13l-7 7-6-6z"/>
   </svg>`,
+  kits: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 24h48v28a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2z"/>
+    <path d="M8 24l4-10h40l4 10M32 24v30"/>
+    <path d="M18 34h8M38 34h8M18 42h8" stroke-opacity=".5"/>
+  </svg>`,
   robotique: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
     <rect x="14" y="22" width="36" height="26" rx="4"/>
     <circle cx="25" cy="34" r="3" fill="currentColor" stroke="none"/>

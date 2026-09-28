@@ -10,6 +10,8 @@ create table if not exists products (
   description text default '',
   price numeric not null default 0,
   stock integer not null default 0,
+  subcategory text default '',
+  image_url text,
   created_at timestamptz default now()
 );
 

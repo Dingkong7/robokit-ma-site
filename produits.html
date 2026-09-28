@@ -47,6 +47,7 @@
     </div>
 
     <div class="chip-filters" id="chipFilters"></div>
+    <div class="chip-filters sub-chips" id="subChipFilters"></div>
 
     <div class="product-grid" id="productGrid"></div>
   </section>
@@ -75,6 +76,7 @@
 <script src="assets/js/components.js"></script>
 <script>
   let activeCategory = getQueryParam("cat") || "all";
+  let activeSub = getQueryParam("sub") || "all";
 
   function renderChips(){
     const chips = [{id:"all", label:"Tous"}, ...CATEGORIES.map(c => ({id:c.id, label:c.label}))];
@@ -82,10 +84,30 @@
     el.innerHTML = chips.map(c =>
       `<button class="chip-filter ${activeCategory===c.id?'active':''}" data-chip="${c.id}">${c.label}</button>`
     ).join("");
+    renderSubChips();
     el.querySelectorAll("[data-chip]").forEach(btn => {
       btn.addEventListener("click", () => {
         activeCategory = btn.getAttribute("data-chip");
+        activeSub = "all";
         renderChips();
+        applyFilters();
+      });
+    });
+  }
+
+  function renderSubChips(){
+    const el = document.getElementById("subChipFilters");
+    const cat = CATEGORIES.find(c => c.id === activeCategory);
+    if(!cat || !cat.subs.length){ el.innerHTML = ""; el.style.display = "none"; return; }
+    el.style.display = "";
+    const chips = [{id:"all", label:"Toutes"}, ...cat.subs];
+    el.innerHTML = chips.map(c =>
+      `<button class="chip-filter chip-sub ${activeSub===c.id?'active':''}" data-sub="${c.id}">${c.label}</button>`
+    ).join("");
+    el.querySelectorAll("[data-sub]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        activeSub = btn.getAttribute("data-sub");
+        renderSubChips();
         applyFilters();
       });
     });
@@ -98,12 +120,14 @@
 
     if(activeCategory !== "all"){
       list = list.filter(p => p.category === activeCategory);
+      if(activeSub !== "all") list = list.filter(p => p.subcategory === activeSub);
     }
     if(query){
       list = list.filter(p =>
         p.title.toLowerCase().includes(query) ||
         p.description.toLowerCase().includes(query) ||
-        categoryLabel(p.category).toLowerCase().includes(query)
+        categoryLabel(p.category).toLowerCase().includes(query) ||
+        subcategoryLabel(p.category, p.subcategory).toLowerCase().includes(query)
       );
     }
     if(sort === "price-asc") list = [...list].sort((a,b) => a.price - b.price);

@@ -71,6 +71,16 @@ function populateCategorySelects(){
   const optionsHtml = CATEGORIES.map(c => `<option value="${c.id}">${c.label}</option>`).join("");
   filterSel.innerHTML = `<option value="all">Toutes les catégories</option>` + optionsHtml;
   formSel.innerHTML = optionsHtml;
+  formSel.onchange = () => populateSubSelect(formSel.value, "");
+  populateSubSelect(formSel.value, "");
+}
+
+function populateSubSelect(catId, selected){
+  const sel = document.getElementById("pSubcategory");
+  const cat = CATEGORIES.find(c => c.id === catId);
+  const subs = cat ? cat.subs : [];
+  sel.innerHTML = `<option value="">— Aucune —</option>` + subs.map(s => `<option value="${s.id}">${s.label}</option>`).join("");
+  sel.value = selected || "";
 }
 
 async function renderAdminTable(){
@@ -91,7 +101,7 @@ async function renderAdminTable(){
     <tr>
       <td><div class="table-thumb">${p.image_url ? `<img src="${p.image_url}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">` : categoryIcon(p.category,"")}</div></td>
       <td>${p.title}</td>
-      <td><span class="tag-cat">${categoryLabel(p.category)}</span></td>
+      <td><span class="tag-cat">${categoryLabel(p.category)}</span>${p.subcategory ? `<br><small style="color:var(--silver);">${subcategoryLabel(p.category, p.subcategory)}</small>` : ""}</td>
       <td>${formatPrice(p.price)}</td>
       <td>${p.stock}</td>
       <td>
@@ -115,6 +125,7 @@ async function openProductModal(id){
     document.getElementById("pId").value = p.id;
     document.getElementById("pTitle").value = p.title;
     document.getElementById("pCategory").value = p.category;
+    populateSubSelect(p.category, p.subcategory);
     document.getElementById("pDescription").value = p.description;
     document.getElementById("pImageUrl").value = p.image_url || "";
     document.getElementById("pPrice").value = p.price;
@@ -122,6 +133,7 @@ async function openProductModal(id){
   } else {
     document.getElementById("modalTitle").textContent = "Ajouter un produit";
     document.getElementById("pId").value = "";
+    populateSubSelect(document.getElementById("pCategory").value, "");
   }
   backdrop.classList.remove("hidden");
 }
@@ -166,6 +178,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       id,
       title: document.getElementById("pTitle").value.trim(),
       category: document.getElementById("pCategory").value,
+      subcategory: document.getElementById("pSubcategory").value || "",
       description: document.getElementById("pDescription").value.trim(),
       image_url: document.getElementById("pImageUrl").value.trim() || null,
       price: parseFloat(document.getElementById("pPrice").value) || 0,

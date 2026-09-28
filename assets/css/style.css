@@ -650,3 +650,8 @@ tbody tr:hover{ background:rgba(62,230,208,.04); }
   .page-head h1{ font-size:1.4rem; }
   .modal{ padding:20px; }
 }
+
+/* ---- Sous-catégories ---- */
+.sub-chips{ margin-top:-12px; padding-left:4px; }
+.chip-filter.chip-sub{ font-size:.76rem; min-height:32px; padding:6px 13px; }
+.cat-card .cat-subcount{ display:block; margin-top:8px; font-family:var(--font-mono); font-size:.7rem; color:var(--cyan-bright); }
