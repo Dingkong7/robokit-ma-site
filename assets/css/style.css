@@ -9,23 +9,45 @@
    previous stylesheet still exists here. Nothing in HTML/JS needed to
    change — this file is a drop-in replacement for assets/css/style.css.
    ========================================================================== */
-   /* =========================================================
-   FIX: 728x90 ad — scale + center on mobile, untouched on desktop
-   Targets our own wrapper class, so it works regardless of
-   whatever markup/ID the ad network injects inside it.
+/* =========================================================
+   728x90 AD BANNER — same approach as the KoooraLive site
+   ---------------------------------------------------------
+   assets/js/ads.js fills every <div class="ad-728-slot"></div>
+   with an iframe. The slot is a full-width centered row; the inner
+   box is locked to the banner's real size (728x90). On narrower
+   screens `zoom` shrinks the WHOLE box (layout size included), so
+   the banner is shown complete and no empty gap is left behind.
    ========================================================= */
-.ad-728-center{
+.ad-728-slot{
+  width:100%;
   display:flex;
   justify-content:center;
-  width:100%;
+  align-items:center;
+  margin:14px 0;
+  overflow:hidden;
+}
+.ad-728-inner{ width:728px; height:90px; flex:0 0 auto; text-align:center; }
+.ad-728-inner iframe.ad-frame{
+  width:728px; height:90px; max-width:none;
+  border:0; display:block; margin:0 auto;
 }
 
-@media (max-width: 728px) {
-  .ad-728-center{
-    transform: scale(calc(100vw / 728));
-    transform-origin: top center;
-    height: calc(90px * (100vw / 728));
-    overflow: visible;
+/* Fallback (browsers without typed calc division): stepped sizes */
+@media (max-width:780px){ .ad-728-inner{ zoom:.92; } }
+@media (max-width:700px){ .ad-728-inner{ zoom:.77; } }
+@media (max-width:600px){ .ad-728-inner{ zoom:.64; } }
+@media (max-width:500px){ .ad-728-inner{ zoom:.5; } }
+@media (max-width:400px){ .ad-728-inner{ zoom:.45; } }
+@media (max-width:360px){ .ad-728-inner{ zoom:.39; } }
+
+/* Modern browsers: fluid ratio = real available width / 728.
+   40px / 32px = the .wrap side padding; never zooms above 100%. */
+@supports (width: calc(1px / 1px)){
+  @media (max-width:780px){
+    .ad-728-inner{ zoom:min(1, calc((100vw - 40px) / 728px)); }
+  }
+  @media (max-width:720px){
+    .ad-728-inner{ zoom:min(1, calc((100vw - 32px) / 728px)); }
   }
 }
 
@@ -364,6 +386,7 @@ section{ padding:60px 0; }
 .card:hover{ border-color:var(--cyan-dim); transform:translateY(-5px); box-shadow:var(--shadow-lift); }
 .card-media{
   aspect-ratio:4/3;
+  overflow:hidden;
   background:
     radial-gradient(120px 80px at 80% 10%, rgba(62,230,208,.10), transparent 70%),
     var(--pcb-800);
@@ -373,10 +396,10 @@ section{ padding:60px 0; }
 }
 .card-media svg{ width:56%; height:56%; transition:transform .25s var(--ease); }
 .card:hover .card-media svg{ transform:scale(1.06) rotate(-1deg); color:var(--cyan-bright); }
-.card-media img{ width:100%; height:100%; object-fit:cover; transition:transform .3s var(--ease); }
+.card-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .3s var(--ease); }
 .card:hover .card-media img{ transform:scale(1.04); }
 .card-cat{
-  position:absolute; top:10px; left:10px;
+  position:absolute; top:10px; left:10px; z-index:2;
   font-family:var(--font-mono); font-size:.65rem; color:var(--cyan-bright);
   background:rgba(7,11,18,.85); border:1px solid var(--pcb-line);
   padding:3px 9px; border-radius:12px;
